@@ -4,8 +4,7 @@ set -e
 # Getting file permissions on host for docker socket
 if [ -e /var/run/docker.sock ]; then
   DOCKER_GID_ON_HOST=$(stat -c %g /var/run/docker.sock)
-  # Change the group ID, if not changing it to 0.
-  [ $DOCKER_GID_ON_HOST -ne 0 ] && sudo groupmod -g $DOCKER_GID_ON_HOST docker
+  sudo groupmod -g $DOCKER_GID_ON_HOST docker
 else
   echo -e "\nThe host docker.sock is not mounted in the container"
   echo -e "To give jenkins access to the docker host, run this image with '-v /var/run/docker.sock:/var/run/docker.sock'\n"

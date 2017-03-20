@@ -20,8 +20,13 @@ RUN echo "jenkins ALL=(ALL)	NOPASSWD: ALL" >> /etc/sudoers
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
-RUN apt-get update && apt-get install -y rsync && apt-get autoclean && apt-get autoremove
+# Connect git-lfs repo
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+
+# Install rsync and git-lfs
+RUN apt-get update && apt-get install -y rsync git-lfs && apt-get autoclean && apt-get autoremove
 
 USER jenkins
+RUN git lfs install
 
 EXPOSE 8080

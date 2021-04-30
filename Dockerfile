@@ -1,5 +1,6 @@
 FROM jenkins:latest
 
+
 USER root
 # Connect apt docker repo
 RUN apt-get update && apt-get install -y apt-transport-https sudo && \
